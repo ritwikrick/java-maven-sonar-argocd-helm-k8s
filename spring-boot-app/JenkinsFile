@@ -5,11 +5,21 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
+
+  options {
+    skipDefaultCheckout(true)
+  }
+
   stages {
+    stage('Cleanup Workspace') {
+      steps {
+        deleteDir()
+      }
+    }
+
     stage('Checkout') {
       steps {
-        sh 'echo passed'
-        // git branch: 'main', url: 'https://github.com/ritwikrick/java-maven-sonar-argocd-helm-k8s.git'
+        git branch: 'main', url: 'https://github.com/ritwikrick/java-maven-sonar-argocd-helm-k8s.git'
       }
     }
 
